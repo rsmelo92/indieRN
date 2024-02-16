@@ -8,9 +8,10 @@
     "lint": "eslint .",
     "start": "react-native start",
     "test": "jest",
-    "ios:install": "cd ios && pod install && cd .."
+    "ios:install": "cd ios && bundle install && bundle exec pod install && cd .."
   },
   "dependencies": {
+    "@tanstack/react-query": "^5.20.5",
     "react": "18.2.0",
     "react-native": "0.73.4"
   },
@@ -22,6 +23,7 @@
     "@react-native/eslint-config": "0.73.2",
     "@react-native/metro-config": "0.73.5",
     "@react-native/typescript-config": "0.73.1",
+    "@tanstack/eslint-plugin-query": "^5.20.1",
     "@types/react": "^18.2.6",
     "@types/react-test-renderer": "^18.0.0",
     "babel-jest": "^29.6.3",
