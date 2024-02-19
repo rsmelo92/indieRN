@@ -10,6 +10,7 @@ import {
 import {useQuery} from '@tanstack/react-query';
 import {PROD_API_URL} from '../constants';
 import {Wrapper} from '../components/Wrapper';
+import {capitalizeFirstLetter, getDuration} from '../utils';
 
 import type {MovieDetailProps} from '../router';
 import type {Movie} from '../../types';
@@ -31,13 +32,18 @@ export const MovieDetail = ({route}: MovieDetailProps) => {
     },
   });
 
-  if (isPending) {
+  if (isPending || data === undefined) {
     return (
       <Wrapper>
         <Text>Loading..</Text>
       </Wrapper>
     );
   }
+
+  const type = capitalizeFirstLetter(data.TIPO_OBRA);
+  const subtype = data.SUBTIPO_OBRA
+    ? `, ${capitalizeFirstLetter(data.SUBTIPO_OBRA)}`
+    : '';
 
   console.log({data});
 
@@ -48,9 +54,24 @@ export const MovieDetail = ({route}: MovieDetailProps) => {
         source={require('../assets/placeholder.jpeg')}
       />
       <View style={styles.content}>
-        <ScrollView style={styles.content}>
-          <View>
-            <Text>{data?.TITULO_ORIGINAL}</Text>
+        <ScrollView>
+          <View style={styles.content}>
+            <Text style={styles.title}>
+              {capitalizeFirstLetter(data.TITULO_ORIGINAL)}
+            </Text>
+            <Text style={styles.subtitle}>
+              {data.ANO_PRODUCAO_FINAL ?? data.ANO_PRODUCAO_INICIAL} -{' '}
+              {getDuration(data.DURACAO_TOTAL)} mins
+            </Text>
+            <Text style={styles.tags}>
+              {capitalizeFirstLetter(data.CLASSIFICACAO_OBRA)} -{' '}
+              {`${type}${subtype}`} -{' '}
+              {capitalizeFirstLetter(data.SEGMENTO_DESTINACAO_INICIAL)}
+            </Text>
+            <Text>
+              {capitalizeFirstLetter(data.MUNICIPIO_REQUERENTE)} -{' '}
+              {data.UF_REQUERENTE}
+            </Text>
           </View>
         </ScrollView>
       </View>
@@ -67,7 +88,25 @@ const styles = StyleSheet.create({
   },
   content: {
     flex: 2,
-    height: Dimensions.get('window').height * 0.7,
+    padding: 20,
     width: '100%',
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    color: '#fff',
+    marginBottom: 8,
+  },
+  subtitle: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: '#fff',
+    marginBottom: 10,
+  },
+  tags: {
+    fontSize: 14,
+    lineHeight: 22,
+    color: '#fff',
+    marginBottom: 10,
   },
 });

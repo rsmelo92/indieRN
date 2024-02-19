@@ -10,6 +10,7 @@ const AppTheme = {
   colors: {
     ...DarkTheme.colors,
     background: '#191a23',
+    text: '#fff',
   },
 };
 
