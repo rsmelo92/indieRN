@@ -1,14 +1,17 @@
 import {QueryClient, QueryClientProvider} from '@tanstack/react-query';
+import {NavigationContainer} from '@react-navigation/native';
 
 const queryClient = new QueryClient();
 
 import React from 'react';
-import {Home} from './src/screens/Home';
+import {Router} from './src/router';
 
 function App(): React.JSX.Element {
   return (
     <QueryClientProvider client={queryClient}>
-      <Home />
+      <NavigationContainer>
+        <Router />
+      </NavigationContainer>
     </QueryClientProvider>
   );
 }

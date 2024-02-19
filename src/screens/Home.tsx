@@ -13,7 +13,11 @@ import {DEV_API_URL, PROD_API_URL} from '../constants';
 console.log(PROD_API_URL);
 console.log(DEV_API_URL);
 
-export const Home = () => {
+import type {HomeProps} from '../router';
+
+type Props = {} & HomeProps;
+
+export const Home = ({}: Props) => {
   const {isPending, data} = useQuery({
     queryKey: ['movies'],
     queryFn: async () => {

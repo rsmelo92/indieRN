@@ -1,6 +1,5 @@
-/**
- * @format
- */
+// Necessary for react navigation as seen on documentation.
+import 'react-native-gesture-handler';
 
 import {AppRegistry} from 'react-native';
 import App from './App';
