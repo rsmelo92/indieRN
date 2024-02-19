@@ -6,45 +6,38 @@ import {
   StatusBar,
   StyleSheet,
   Text,
-  useColorScheme,
   View,
 } from 'react-native';
 
-import {Colors} from 'react-native/Libraries/NewAppScreen';
-
-const URL = 'https://postgres-prisma-nextjs-six.vercel.app/api/movies';
+import {DEV_API_URL, PROD_API_URL} from '../constants';
+console.log(PROD_API_URL);
+console.log(DEV_API_URL);
 
 export const Home = () => {
   const {isPending, data} = useQuery({
     queryKey: ['movies'],
     queryFn: async () => {
-      const response = await fetch(URL);
-      return response.json();
+      try {
+        const url = `${PROD_API_URL}/movies`;
+        const response = await fetch(url);
+        return response.json();
+      } catch (error) {
+        console.error(error);
+        return [];
+      }
     },
   });
-  const isDarkMode = useColorScheme() === 'dark';
-
-  const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
-  };
-
-  console.log({data});
 
   return (
-    <SafeAreaView style={backgroundStyle}>
-      <StatusBar
-        barStyle={isDarkMode ? 'light-content' : 'dark-content'}
-        backgroundColor={backgroundStyle.backgroundColor}
-      />
-      <ScrollView
-        contentInsetAdjustmentBehavior="automatic"
-        style={backgroundStyle}>
+    <SafeAreaView>
+      <StatusBar />
+      <ScrollView contentInsetAdjustmentBehavior="automatic">
         <View style={styles.wrapper}>
           <>
             {isPending ? (
               <Text>Loading...</Text>
             ) : (
-              data.map((movie: any) => {
+              data?.map((movie: any) => {
                 return <Text key={movie.id}>{movie.TITULO_ORIGINAL}</Text>;
               })
             )}
