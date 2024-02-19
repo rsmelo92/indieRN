@@ -1,6 +1,6 @@
 import {useQuery} from '@tanstack/react-query';
 import React, {useState} from 'react';
-import {StyleSheet, Text, TextInput, View} from 'react-native';
+import {StyleSheet, Text, View} from 'react-native';
 
 import {DEV_API_URL} from '../constants';
 import {Movie} from '../../types';
