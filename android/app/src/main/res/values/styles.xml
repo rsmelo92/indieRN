@@ -3,6 +3,9 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.DayNight.NoActionBar">
         <!-- Customize your theme here. -->
+        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:windowBackground">#191a23</item>
+        <item name="android:statusBarColor">#191a23</item>
         <item name="android:editTextBackground">@drawable/rn_edit_text_material</item>
     </style>
 

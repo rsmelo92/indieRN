@@ -1,13 +1,14 @@
 import React from 'react';
-import {Text, View, Button} from 'react-native';
+import {Text, Button} from 'react-native';
 
 import type {LoginProps} from '../router';
+import {Wrapper} from '../components/Wrapper';
 
 type Props = {} & LoginProps;
 
 export const Login = ({navigation}: Props) => {
   return (
-    <View>
+    <Wrapper>
       <Text>Login</Text>
       <Button
         title="Go Home"
@@ -15,6 +16,6 @@ export const Login = ({navigation}: Props) => {
           navigation.navigate('Home');
         }}
       />
-    </View>
+    </Wrapper>
   );
 };

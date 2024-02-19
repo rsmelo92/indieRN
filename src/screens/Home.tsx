@@ -14,10 +14,11 @@ console.log(PROD_API_URL);
 console.log(DEV_API_URL);
 
 import type {HomeProps} from '../router';
+import {Wrapper} from '../components/Wrapper';
 
 type Props = {} & HomeProps;
 
-export const Home = ({}: Props) => {
+export const Home = ({navigation}: Props) => {
   const {isPending, data} = useQuery({
     queryKey: ['movies'],
     queryFn: async () => {
@@ -34,30 +35,40 @@ export const Home = ({}: Props) => {
 
   return (
     <SafeAreaView>
-      <StatusBar />
+      <StatusBar translucent backgroundColor="transparent" />
       <ScrollView contentInsetAdjustmentBehavior="automatic">
-        <View style={styles.wrapper}>
+        <Wrapper>
           <>
             {isPending ? (
               <Text>Loading...</Text>
             ) : (
               data?.map((movie: any) => {
-                return <Text key={movie.id}>{movie.TITULO_ORIGINAL}</Text>;
+                return (
+                  <View key={movie.id} style={styles.movieCard}>
+                    <Text
+                      onPress={() => {
+                        console.log(movie.CPB);
+
+                        navigation.navigate('MovieDetail', {CPB: movie.CPB});
+                      }}>
+                      {movie.TITULO_ORIGINAL}
+                    </Text>
+                  </View>
+                );
               })
             )}
           </>
-        </View>
+        </Wrapper>
       </ScrollView>
     </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
-  wrapper: {
-    flex: 1,
+  movieCard: {
+    height: 200,
+    display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    height: '100%',
-    width: '100%',
   },
 });
