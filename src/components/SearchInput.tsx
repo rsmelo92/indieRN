@@ -4,15 +4,16 @@ import React from 'react';
 type Props = {
   onSearch?: (value: string) => void;
   onFocus?: () => void;
+  autoFocus?: boolean;
 };
 
-export const SearchInput = ({onSearch, onFocus}: Props) => {
+export const SearchInput = ({onSearch, onFocus, autoFocus = true}: Props) => {
   return (
     <TextInput
       style={styles.input}
       placeholder="Procure por uma obra nacional"
       placeholderTextColor="#ccc"
-      autoFocus
+      autoFocus={autoFocus}
       onChangeText={value => {
         if (onSearch) {
           onSearch(value);

@@ -52,6 +52,7 @@ export const Home = ({navigation}: Props) => {
           <View style={styles.inputWrapper}>
             <Text style={styles.title}>Cinema Absoluto</Text>
             <SearchInput
+              autoFocus={false}
               onFocus={() => {
                 navigation.navigate('Search');
               }}
