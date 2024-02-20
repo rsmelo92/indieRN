@@ -18,7 +18,7 @@ type Props = {} & MovieListProps;
 export const MovieList = ({route, navigation}: Props) => {
   const {query} = route.params;
   const listRef = useRef(null);
-  const {isPending, fetchNextPage, isFetching, data} = useInfiniteQuery({
+  const {isPending, fetchNextPage, data} = useInfiniteQuery({
     queryKey: ['movieList', query],
     queryFn: async ({pageParam}) => {
       const cursor =
@@ -46,27 +46,25 @@ export const MovieList = ({route, navigation}: Props) => {
       ) : (
         <PanGestureHandler waitFor={listRef}>
           <View ref={listRef} style={styles.view}>
-            <FlashList
-              data={data?.pages.flat()}
-              renderItem={({item}: {item: Movie}) => (
-                <TouchableOpacity
-                  style={styles.movieCard}
-                  onPress={() => {
-                    console.log(item.CPB);
-                    navigation.navigate('MovieDetail', {CPB: item.CPB});
-                  }}>
-                  <Text style={styles.text}>{item.TITULO_ORIGINAL}</Text>
-                </TouchableOpacity>
-              )}
-              refreshing={isFetching}
-              estimatedItemSize={200}
-              onEndReachedThreshold={0.8}
-              onEndReached={() => {
-                console.log('end reached');
-
-                fetchNextPage();
-              }}
-            />
+            <ScrollView>
+              <FlashList
+                data={data?.pages.flat()}
+                renderItem={({item}: {item: Movie}) => (
+                  <TouchableOpacity
+                    style={styles.movieCard}
+                    onPress={() => {
+                      navigation.navigate('MovieDetail', {CPB: item.CPB});
+                    }}>
+                    <Text style={styles.text}>{item.TITULO_ORIGINAL}</Text>
+                  </TouchableOpacity>
+                )}
+                keyExtractor={item => item.CPB}
+                estimatedItemSize={200}
+                // TODO: Fix on end reach being called all the time
+                // onEndReachedThreshold={0.8}
+                // onEndReached={fetchNextPage}
+              />
+            </ScrollView>
           </View>
         </PanGestureHandler>
       )}
