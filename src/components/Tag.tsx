@@ -9,13 +9,11 @@ type Props = {
 
 export const Tag = ({onPress, title}: Props) => {
   return (
-    <View>
-      <TouchableOpacity style={styles.wrapper} onPress={onPress}>
-        <View>
-          <Text style={styles.text}>{title}</Text>
-        </View>
-      </TouchableOpacity>
-    </View>
+    <TouchableOpacity style={styles.wrapper} onPress={onPress}>
+      <View>
+        <Text style={styles.text}>{title}</Text>
+      </View>
+    </TouchableOpacity>
   );
 };
 

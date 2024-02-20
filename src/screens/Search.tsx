@@ -43,20 +43,18 @@ export const Search = ({navigation}: Props) => {
         {isPending ? (
           <Text>Loading...</Text>
         ) : (
-          data?.map((movie: Movie) => {
-            return (
-              <TouchableWithoutFeedback
-                key={movie.CPB}
-                onPress={() => {
-                  navigation.navigate('MovieDetail', {CPB: movie.CPB});
-                }}>
-                <Text style={styles.result}>
-                  {movie.TITULO_ORIGINAL} (
-                  {movie.ANO_PRODUCAO_FINAL || movie.ANO_PRODUCAO_INICIAL})
-                </Text>
-              </TouchableWithoutFeedback>
-            );
-          })
+          data?.map((movie: Movie) => (
+            <TouchableWithoutFeedback
+              key={movie.CPB}
+              onPress={() => {
+                navigation.navigate('MovieDetail', {CPB: movie.CPB});
+              }}>
+              <Text style={styles.result}>
+                {movie.TITULO_ORIGINAL} (
+                {movie.ANO_PRODUCAO_FINAL || movie.ANO_PRODUCAO_INICIAL})
+              </Text>
+            </TouchableWithoutFeedback>
+          ))
         )}
       </View>
     </View>

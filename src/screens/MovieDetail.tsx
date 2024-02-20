@@ -8,7 +8,7 @@ import {
   ScrollView,
 } from 'react-native';
 import {useQuery} from '@tanstack/react-query';
-import {PROD_API_URL} from '../constants';
+import {API_URL} from '../constants';
 import {Wrapper} from '../components/Wrapper';
 import {capitalizeFirstLetter, getDuration} from '../utils';
 
@@ -22,7 +22,7 @@ export const MovieDetail = ({route}: MovieDetailProps) => {
     queryKey: ['singleMovie', CPB],
     queryFn: async () => {
       try {
-        const url = `${PROD_API_URL}/singleMovie?CPB=${CPB}`;
+        const url = `${API_URL}/singleMovie?CPB=${CPB}`;
         const response = await fetch(url);
         return response.json();
       } catch (error) {
