@@ -68,7 +68,7 @@ export const MovieDetail = ({route}: MovieDetailProps) => {
               {`${type}${subtype}`} -{' '}
               {capitalizeFirstLetter(data.SEGMENTO_DESTINACAO_INICIAL)}
             </Text>
-            <Text>
+            <Text style={styles.uf}>
               {capitalizeFirstLetter(data.MUNICIPIO_REQUERENTE)} -{' '}
               {data.UF_REQUERENTE}
             </Text>
@@ -108,5 +108,9 @@ const styles = StyleSheet.create({
     lineHeight: 22,
     color: '#fff',
     marginBottom: 10,
+  },
+  uf: {
+    fontSize: 14,
+    color: '#fff',
   },
 });

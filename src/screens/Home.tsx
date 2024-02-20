@@ -6,13 +6,12 @@ import {
   StatusBar,
   StyleSheet,
   Text,
-  TextInput,
   View,
 } from 'react-native';
 
 import {Wrapper} from '../components/Wrapper';
 import {Tag} from '../components/Tag';
-import {DEV_API_URL} from '../constants';
+import {API_URL} from '../constants';
 
 import type {HomeProps} from '../router';
 import {SearchInput} from '../components/SearchInput';
@@ -34,7 +33,7 @@ export const Home = ({navigation}: Props) => {
     queryKey: ['movies'],
     queryFn: async () => {
       try {
-        const url = `${DEV_API_URL}/movies`;
+        const url = `${API_URL}/movies`;
         const response = await fetch(url);
         return response.json();
       } catch (error) {
@@ -62,7 +61,13 @@ export const Home = ({navigation}: Props) => {
             <Text style={styles.secondTitle}>Por categoria</Text>
             <View style={styles.tagsWrapper}>
               {tags.map(item => (
-                <Tag key={item} title={item} />
+                <Tag
+                  key={item}
+                  title={item}
+                  onPress={() => {
+                    console.log('press');
+                  }}
+                />
               ))}
             </View>
           </View>
