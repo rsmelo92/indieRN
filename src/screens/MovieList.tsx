@@ -1,10 +1,9 @@
 import {Dimensions, StyleSheet, Text, View} from 'react-native';
-import React, {useRef} from 'react';
+import React from 'react';
 import {API_URL} from '../constants';
 import {useInfiniteQuery} from '@tanstack/react-query';
 import {FlashList} from '@shopify/flash-list';
 import {Movie} from '../../types';
-import {PanGestureHandler, ScrollView} from 'react-native-gesture-handler';
 import {MovieItem} from './MovieItem';
 
 import type {MovieListProps} from '../router';
@@ -15,7 +14,6 @@ type Props = {} & MovieListProps;
 
 export const MovieList = ({route, navigation}: Props) => {
   const {query, title} = route.params;
-  const listRef = useRef(null);
   const {isPending, fetchNextPage, data} = useInfiniteQuery({
     queryKey: ['movieList', query],
     queryFn: async ({pageParam}) => {
@@ -43,30 +41,25 @@ export const MovieList = ({route, navigation}: Props) => {
       {isPending ? (
         <ListSkeleton />
       ) : (
-        <PanGestureHandler waitFor={listRef}>
-          <ScrollView ref={listRef}>
-            <View style={styles.view}>
-              <FlashList
-                data={data?.pages.flat()}
-                renderItem={({item}: {item: Movie}) => (
-                  <MovieItem
-                    title={item.TITULO_ORIGINAL}
-                    year={item.ANO_PRODUCAO_FINAL ?? item.ANO_PRODUCAO_INICIAL}
-                    duration={getDuration(item.DURACAO_TOTAL)}
-                    onPress={() => {
-                      navigation.navigate('MovieDetail', {CPB: item.CPB});
-                    }}
-                  />
-                )}
-                keyExtractor={item => item.CPB}
-                estimatedItemSize={200}
-                // TODO: Fix on end reach being called all the time
-                onEndReachedThreshold={0.8}
-                onEndReached={fetchNextPage}
+        <View style={styles.view}>
+          <FlashList
+            data={data?.pages.flat()}
+            renderItem={({item}: {item: Movie}) => (
+              <MovieItem
+                title={item.TITULO_ORIGINAL}
+                year={item.ANO_PRODUCAO_FINAL ?? item.ANO_PRODUCAO_INICIAL}
+                duration={getDuration(item.DURACAO_TOTAL)}
+                onPress={() => {
+                  navigation.navigate('MovieDetail', {CPB: item.CPB});
+                }}
               />
-            </View>
-          </ScrollView>
-        </PanGestureHandler>
+            )}
+            keyExtractor={item => item.CPB}
+            estimatedItemSize={200}
+            onEndReachedThreshold={0.8}
+            onEndReached={fetchNextPage}
+          />
+        </View>
       )}
     </View>
   );
@@ -86,7 +79,7 @@ const styles = StyleSheet.create({
   },
   view: {
     flex: 1,
-    height: Dimensions.get('window').height,
+    height: '100%',
     width: Dimensions.get('window').width,
   },
   title: {
