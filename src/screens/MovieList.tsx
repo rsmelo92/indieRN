@@ -4,16 +4,12 @@ import {API_URL} from '../constants';
 import {useInfiniteQuery} from '@tanstack/react-query';
 import {FlashList} from '@shopify/flash-list';
 import {Movie} from '../../types';
-import {
-  PanGestureHandler,
-  ScrollView,
-  TouchableOpacity,
-} from 'react-native-gesture-handler';
-import {FilmRoll} from '../assets/FilmRoll';
+import {PanGestureHandler, ScrollView} from 'react-native-gesture-handler';
 import {MovieItem} from './MovieItem';
 
 import type {MovieListProps} from '../router';
 import {getDuration} from '../utils';
+import {ListSkeleton} from '../components/ListSkeleton';
 
 type Props = {} & MovieListProps;
 
@@ -44,10 +40,10 @@ export const MovieList = ({route, navigation}: Props) => {
   return (
     <View style={styles.wrapper}>
       <Text style={styles.title}>{title}</Text>
-      <PanGestureHandler waitFor={listRef}>
-        {isPending ? (
-          <Text>Loading...</Text>
-        ) : (
+      {isPending ? (
+        <ListSkeleton />
+      ) : (
+        <PanGestureHandler waitFor={listRef}>
           <ScrollView ref={listRef}>
             <View style={styles.view}>
               <FlashList
@@ -70,8 +66,8 @@ export const MovieList = ({route, navigation}: Props) => {
               />
             </View>
           </ScrollView>
-        )}
-      </PanGestureHandler>
+        </PanGestureHandler>
+      )}
     </View>
   );
 };
@@ -90,7 +86,7 @@ const styles = StyleSheet.create({
   },
   view: {
     flex: 1,
-    height: Dimensions.get('window').height - 250,
+    height: Dimensions.get('window').height,
     width: Dimensions.get('window').width,
   },
   title: {
