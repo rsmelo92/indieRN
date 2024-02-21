@@ -1,8 +1,8 @@
 import {useQuery} from '@tanstack/react-query';
 import React, {useState} from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import {StyleSheet, TouchableWithoutFeedback, Text, View} from 'react-native';
 
-import {DEV_API_URL} from '../constants';
+import {API_URL} from '../constants';
 import {Movie} from '../../types';
 import {SearchProps} from '../router';
 import {debounce} from '../utils';
@@ -18,7 +18,7 @@ export const Search = ({navigation}: Props) => {
     queryKey: ['search'],
     queryFn: async () => {
       try {
-        const url = `${DEV_API_URL}/search?query=${query}`;
+        const url = `${API_URL}/search?query=${query}`;
         const response = await fetch(url);
         return response.json();
       } catch (error) {
@@ -43,19 +43,18 @@ export const Search = ({navigation}: Props) => {
         {isPending ? (
           <Text>Loading...</Text>
         ) : (
-          data?.map((movie: Movie) => {
-            return (
-              <Text
-                key={movie.CPB}
-                style={styles.result}
-                onPress={() => {
-                  navigation.navigate('MovieDetail', {CPB: movie.CPB});
-                }}>
+          data?.map((movie: Movie) => (
+            <TouchableWithoutFeedback
+              key={movie.CPB}
+              onPress={() => {
+                navigation.navigate('MovieDetail', {CPB: movie.CPB});
+              }}>
+              <Text style={styles.result}>
                 {movie.TITULO_ORIGINAL} (
                 {movie.ANO_PRODUCAO_FINAL || movie.ANO_PRODUCAO_INICIAL})
               </Text>
-            );
-          })
+            </TouchableWithoutFeedback>
+          ))
         )}
       </View>
     </View>

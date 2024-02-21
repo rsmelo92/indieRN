@@ -1,4 +1,3 @@
-import {useQuery} from '@tanstack/react-query';
 import React from 'react';
 import {
   SafeAreaView,
@@ -6,13 +5,11 @@ import {
   StatusBar,
   StyleSheet,
   Text,
-  TextInput,
   View,
 } from 'react-native';
 
 import {Wrapper} from '../components/Wrapper';
 import {Tag} from '../components/Tag';
-import {DEV_API_URL} from '../constants';
 
 import type {HomeProps} from '../router';
 import {SearchInput} from '../components/SearchInput';
@@ -30,20 +27,6 @@ const tags = [
 ];
 
 export const Home = ({navigation}: Props) => {
-  const {isPending, data} = useQuery({
-    queryKey: ['movies'],
-    queryFn: async () => {
-      try {
-        const url = `${DEV_API_URL}/movies`;
-        const response = await fetch(url);
-        return response.json();
-      } catch (error) {
-        console.error(error);
-        return [];
-      }
-    },
-  });
-
   return (
     <SafeAreaView>
       <StatusBar translucent backgroundColor="transparent" />
@@ -62,30 +45,21 @@ export const Home = ({navigation}: Props) => {
             <Text style={styles.secondTitle}>Por categoria</Text>
             <View style={styles.tagsWrapper}>
               {tags.map(item => (
-                <Tag key={item} title={item} />
+                <Tag
+                  key={item}
+                  title={item}
+                  onPress={() => {
+                    console.log(`{TIPO_OBRA:${item.toUpperCase()}}`);
+
+                    navigation.navigate('MovieList', {
+                      query: `{"TIPO_OBRA": "${item.toUpperCase()}"}`,
+                      title: item,
+                    });
+                  }}
+                />
               ))}
             </View>
           </View>
-          <>
-            {isPending ? (
-              <Text>Loading...</Text>
-            ) : (
-              data?.map((movie: any) => {
-                return (
-                  <View key={movie.id} style={styles.movieCard}>
-                    <Text
-                      onPress={() => {
-                        console.log(movie.CPB);
-
-                        navigation.navigate('MovieDetail', {CPB: movie.CPB});
-                      }}>
-                      {movie.TITULO_ORIGINAL}
-                    </Text>
-                  </View>
-                );
-              })
-            )}
-          </>
         </Wrapper>
       </ScrollView>
     </SafeAreaView>

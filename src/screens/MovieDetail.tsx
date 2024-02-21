@@ -8,7 +8,7 @@ import {
   ScrollView,
 } from 'react-native';
 import {useQuery} from '@tanstack/react-query';
-import {PROD_API_URL} from '../constants';
+import {API_URL} from '../constants';
 import {Wrapper} from '../components/Wrapper';
 import {capitalizeFirstLetter, getDuration} from '../utils';
 
@@ -22,7 +22,7 @@ export const MovieDetail = ({route}: MovieDetailProps) => {
     queryKey: ['singleMovie', CPB],
     queryFn: async () => {
       try {
-        const url = `${PROD_API_URL}/singleMovie?CPB=${CPB}`;
+        const url = `${API_URL}/singleMovie?CPB=${CPB}`;
         const response = await fetch(url);
         return response.json();
       } catch (error) {
@@ -68,7 +68,7 @@ export const MovieDetail = ({route}: MovieDetailProps) => {
               {`${type}${subtype}`} -{' '}
               {capitalizeFirstLetter(data.SEGMENTO_DESTINACAO_INICIAL)}
             </Text>
-            <Text>
+            <Text style={styles.uf}>
               {capitalizeFirstLetter(data.MUNICIPIO_REQUERENTE)} -{' '}
               {data.UF_REQUERENTE}
             </Text>
@@ -108,5 +108,9 @@ const styles = StyleSheet.create({
     lineHeight: 22,
     color: '#fff',
     marginBottom: 10,
+  },
+  uf: {
+    fontSize: 14,
+    color: '#fff',
   },
 });
