@@ -4,7 +4,11 @@ import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
 
 const SkeletonItem = () => {
   return (
-    <SkeletonPlaceholder borderRadius={4}>
+    <SkeletonPlaceholder
+      borderRadius={4}
+      backgroundColor="#262835"
+      highlightColor="#393b4a"
+      speed={900}>
       <SkeletonPlaceholder.Item flexDirection="row" alignItems="center">
         <SkeletonPlaceholder.Item width={70} height={70} borderRadius={70} />
         <SkeletonPlaceholder.Item marginLeft={20}>
