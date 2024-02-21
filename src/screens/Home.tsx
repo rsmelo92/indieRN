@@ -53,6 +53,7 @@ export const Home = ({navigation}: Props) => {
 
                     navigation.navigate('MovieList', {
                       query: `{"TIPO_OBRA": "${item.toUpperCase()}"}`,
+                      title: item,
                     });
                   }}
                 />

@@ -1,10 +1,7 @@
 import {Dimensions, StyleSheet, Text, View} from 'react-native';
 import React, {useRef} from 'react';
 import {API_URL} from '../constants';
-
-import type {MovieListProps} from '../router';
 import {useInfiniteQuery} from '@tanstack/react-query';
-
 import {FlashList} from '@shopify/flash-list';
 import {Movie} from '../../types';
 import {
@@ -12,11 +9,16 @@ import {
   ScrollView,
   TouchableOpacity,
 } from 'react-native-gesture-handler';
+import {FilmRoll} from '../assets/FilmRoll';
+import {MovieItem} from './MovieItem';
+
+import type {MovieListProps} from '../router';
+import {getDuration} from '../utils';
 
 type Props = {} & MovieListProps;
 
 export const MovieList = ({route, navigation}: Props) => {
-  const {query} = route.params;
+  const {query, title} = route.params;
   const listRef = useRef(null);
   const {isPending, fetchNextPage, data} = useInfiniteQuery({
     queryKey: ['movieList', query],
@@ -40,39 +42,46 @@ export const MovieList = ({route, navigation}: Props) => {
     },
   });
   return (
-    <>
-      {isPending ? (
-        <Text>Loading...</Text>
-      ) : (
-        <PanGestureHandler waitFor={listRef}>
-          <View ref={listRef} style={styles.view}>
-            <ScrollView>
+    <View style={styles.wrapper}>
+      <Text style={styles.title}>{title}</Text>
+      <PanGestureHandler waitFor={listRef}>
+        {isPending ? (
+          <Text>Loading...</Text>
+        ) : (
+          <ScrollView ref={listRef}>
+            <View style={styles.view}>
               <FlashList
                 data={data?.pages.flat()}
                 renderItem={({item}: {item: Movie}) => (
-                  <TouchableOpacity
-                    style={styles.movieCard}
+                  <MovieItem
+                    title={item.TITULO_ORIGINAL}
+                    year={item.ANO_PRODUCAO_FINAL ?? item.ANO_PRODUCAO_INICIAL}
+                    duration={getDuration(item.DURACAO_TOTAL)}
                     onPress={() => {
                       navigation.navigate('MovieDetail', {CPB: item.CPB});
-                    }}>
-                    <Text style={styles.text}>{item.TITULO_ORIGINAL}</Text>
-                  </TouchableOpacity>
+                    }}
+                  />
                 )}
                 keyExtractor={item => item.CPB}
                 estimatedItemSize={200}
                 // TODO: Fix on end reach being called all the time
-                // onEndReachedThreshold={0.8}
-                // onEndReached={fetchNextPage}
+                onEndReachedThreshold={0.8}
+                onEndReached={fetchNextPage}
               />
-            </ScrollView>
-          </View>
-        </PanGestureHandler>
-      )}
-    </>
+            </View>
+          </ScrollView>
+        )}
+      </PanGestureHandler>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
+  wrapper: {
+    marginTop: 10,
+    height: Dimensions.get('window').height,
+    width: Dimensions.get('window').width,
+  },
   movieCard: {
     height: 200,
     display: 'flex',
@@ -80,9 +89,15 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   view: {
-    // flex: 1,
-    height: Dimensions.get('window').height,
+    flex: 1,
+    height: Dimensions.get('window').height - 250,
     width: Dimensions.get('window').width,
+  },
+  title: {
+    color: '#fff',
+    fontSize: 24,
+    paddingHorizontal: 20,
+    marginBottom: 8,
   },
   text: {
     color: 'white',

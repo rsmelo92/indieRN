@@ -14,7 +14,10 @@ type RootStackParamList = {
   Login: undefined;
   Search: undefined;
   MovieDetail: {CPB: string};
-  MovieList: {query: string};
+  MovieList: {
+    query: string;
+    title: string;
+  };
 };
 
 export type LoginProps = StackScreenProps<RootStackParamList, 'Login'>;
@@ -50,7 +53,7 @@ export const Router = () => {
       <Stack.Screen
         name="MovieList"
         component={MovieList}
-        initialParams={{query: ''}}
+        initialParams={{query: '', title: ''}}
       />
     </Stack.Navigator>
   );
