@@ -12,6 +12,7 @@ import {
 import {Tag} from '../components/Tag';
 import {SearchInput} from '../components/SearchInput';
 import {MovieCarousel} from '../components/MovieCarousel';
+import {NAVIGATION_HEADER_HEIGHT} from '../constants';
 
 import type {HomeProps} from '../router';
 
@@ -33,7 +34,7 @@ export const Home = ({navigation}: Props) => {
       <StatusBar translucent backgroundColor="transparent" />
       <View style={styles.wrapper}>
         <ScrollView
-          style={styles.scrollview}
+          contentContainerStyle={styles.scrollViewContent}
           contentInsetAdjustmentBehavior="automatic">
           <View style={styles.inputWrapper}>
             <Text style={styles.title}>Cinema Absoluto</Text>
@@ -72,7 +73,7 @@ export const Home = ({navigation}: Props) => {
             <MovieCarousel
               title="Longas"
               navigation={navigation}
-              type="curta"
+              type="longa"
             />
           </View>
         </ScrollView>
@@ -83,13 +84,13 @@ export const Home = ({navigation}: Props) => {
 
 const styles = StyleSheet.create({
   wrapper: {
-    marginTop: 10,
-    height: Dimensions.get('window').height,
-    width: Dimensions.get('window').width,
+    height:
+      Dimensions.get('window').height -
+      (StatusBar.currentHeight || 0) -
+      NAVIGATION_HEADER_HEIGHT,
   },
-  scrollview: {
-    height: Dimensions.get('window').height,
-    width: Dimensions.get('window').width,
+  scrollViewContent: {
+    paddingBottom: 120,
   },
   movieCard: {
     height: 200,
