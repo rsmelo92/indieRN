@@ -2,12 +2,12 @@ import {useQuery} from '@tanstack/react-query';
 import React, {useState} from 'react';
 import {StyleSheet, TouchableWithoutFeedback, Text, View} from 'react-native';
 
+import {SearchInput} from '../components/SearchInput';
 import {API_URL} from '../constants';
-import {Movie} from '../../types';
-import {SearchProps} from '../router';
 import {debounce} from '../utils';
 
-import {SearchInput} from '../components/SearchInput';
+import type {SearchProps} from '../router';
+import type {Movie} from '../../types';
 
 type Props = {} & SearchProps;
 

@@ -1,14 +1,15 @@
 import {Dimensions, StyleSheet, Text, View} from 'react-native';
 import React from 'react';
-import {API_URL} from '../constants';
 import {useInfiniteQuery} from '@tanstack/react-query';
 import {FlashList} from '@shopify/flash-list';
-import {Movie} from '../../types';
-import {MovieItem} from './MovieItem';
-
-import type {MovieListProps} from '../router';
-import {getDuration} from '../utils';
+import {MovieItem} from '../components/MovieItem';
 import {ListSkeleton} from '../components/ListSkeleton';
+
+import {API_URL} from '../constants';
+import {getDuration} from '../utils';
+
+import type {Movie} from '../../types';
+import type {MovieListProps} from '../router';
 
 type Props = {} & MovieListProps;
 
