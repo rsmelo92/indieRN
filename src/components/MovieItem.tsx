@@ -12,7 +12,7 @@ type Props = {
 
 export const MovieItem = ({onPress, title, year, duration}: Props) => {
   return (
-    <TouchableOpacity style={styles.movieCard} onPress={onPress}>
+    <TouchableOpacity style={styles.horizontal} onPress={onPress}>
       <View style={styles.imageWrapper}>
         <FilmRoll height={70} width={70} />
       </View>
@@ -26,13 +26,42 @@ export const MovieItem = ({onPress, title, year, duration}: Props) => {
   );
 };
 
+export const MovieItemVertical = ({onPress, title, year, duration}: Props) => {
+  return (
+    <TouchableOpacity style={styles.vertical} onPress={onPress}>
+      <View style={styles.imageWrapper}>
+        <FilmRoll height={100} width={100} />
+      </View>
+      <View style={styles.textWrapper}>
+        <Text numberOfLines={2} style={styles.text}>
+          {title}
+        </Text>
+        <Text style={styles.text}>
+          {year} - {duration} mins
+        </Text>
+      </View>
+    </TouchableOpacity>
+  );
+};
+
 const styles = StyleSheet.create({
-  movieCard: {
+  horizontal: {
     height: 100,
     alignItems: 'center',
     flexDirection: 'row',
     paddingHorizontal: 20,
     marginBottom: 10,
+  },
+  vertical: {
+    height: 230,
+    width: 200,
+    alignItems: 'center',
+    backgroundColor: '#262835',
+    paddingHorizontal: 30,
+    paddingVertical: 20,
+    borderRadius: 10,
+    gap: 80,
+    justifyContent: 'center',
   },
   imageWrapper: {
     flex: 1,

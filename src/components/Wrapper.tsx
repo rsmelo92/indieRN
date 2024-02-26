@@ -1,5 +1,6 @@
 import React from 'react';
 import {StyleSheet, View} from 'react-native';
+
 import type {StyleProp, ViewStyle} from 'react-native';
 
 type Props = {

@@ -1,5 +1,6 @@
 import React from 'react';
 import {
+  Dimensions,
   SafeAreaView,
   ScrollView,
   StatusBar,
@@ -8,11 +9,11 @@ import {
   View,
 } from 'react-native';
 
-import {Wrapper} from '../components/Wrapper';
 import {Tag} from '../components/Tag';
+import {SearchInput} from '../components/SearchInput';
+import {MovieCarousel} from '../components/MovieCarousel';
 
 import type {HomeProps} from '../router';
-import {SearchInput} from '../components/SearchInput';
 
 type Props = {} & HomeProps;
 
@@ -30,8 +31,10 @@ export const Home = ({navigation}: Props) => {
   return (
     <SafeAreaView>
       <StatusBar translucent backgroundColor="transparent" />
-      <ScrollView contentInsetAdjustmentBehavior="automatic">
-        <Wrapper style={styles.wrapper}>
+      <View style={styles.wrapper}>
+        <ScrollView
+          style={styles.scrollview}
+          contentInsetAdjustmentBehavior="automatic">
           <View style={styles.inputWrapper}>
             <Text style={styles.title}>Cinema Absoluto</Text>
             <SearchInput
@@ -41,7 +44,7 @@ export const Home = ({navigation}: Props) => {
               }}
             />
           </View>
-          <View>
+          <View style={styles.categories}>
             <Text style={styles.secondTitle}>Por categoria</Text>
             <View style={styles.tagsWrapper}>
               {tags.map(item => (
@@ -49,8 +52,6 @@ export const Home = ({navigation}: Props) => {
                   key={item}
                   title={item}
                   onPress={() => {
-                    console.log(`{TIPO_OBRA:${item.toUpperCase()}}`);
-
                     navigation.navigate('MovieList', {
                       query: `{"TIPO_OBRA": "${item.toUpperCase()}"}`,
                       title: item,
@@ -60,15 +61,35 @@ export const Home = ({navigation}: Props) => {
               ))}
             </View>
           </View>
-        </Wrapper>
-      </ScrollView>
+          <View style={styles.carousel}>
+            <MovieCarousel
+              title="Curtas"
+              navigation={navigation}
+              type="curta"
+            />
+          </View>
+          <View style={styles.carousel}>
+            <MovieCarousel
+              title="Longas"
+              navigation={navigation}
+              type="curta"
+            />
+          </View>
+        </ScrollView>
+      </View>
     </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
   wrapper: {
-    padding: 20,
+    marginTop: 10,
+    height: Dimensions.get('window').height,
+    width: Dimensions.get('window').width,
+  },
+  scrollview: {
+    height: Dimensions.get('window').height,
+    width: Dimensions.get('window').width,
   },
   movieCard: {
     height: 200,
@@ -85,7 +106,7 @@ const styles = StyleSheet.create({
   },
   inputWrapper: {
     width: '100%',
-    paddingVertical: 20,
+    padding: 20,
   },
   input: {
     width: '100%',
@@ -97,10 +118,13 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontSize: 16,
   },
+  categories: {
+    flex: 1,
+    paddingHorizontal: 20,
+  },
   secondTitle: {
     color: '#fff',
     fontSize: 24,
-    marginTop: 40,
     marginBottom: 26,
   },
   tagsWrapper: {
@@ -108,5 +132,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     gap: 10,
     flexWrap: 'wrap',
+  },
+  carousel: {
+    marginBottom: 40,
   },
 });

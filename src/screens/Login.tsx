@@ -1,8 +1,9 @@
 import React from 'react';
 import {Text, Button} from 'react-native';
 
-import type {LoginProps} from '../router';
 import {Wrapper} from '../components/Wrapper';
+
+import type {LoginProps} from '../router';
 
 type Props = {} & LoginProps;
 
