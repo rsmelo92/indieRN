@@ -2,9 +2,10 @@ import {Dimensions, StyleSheet, Text, View} from 'react-native';
 import React from 'react';
 import {useInfiniteQuery} from '@tanstack/react-query';
 import {FlashList} from '@shopify/flash-list';
+
 import {MovieItem} from '../components/MovieItem';
 import {ListSkeleton} from '../components/ListSkeleton';
-
+import {EmptyState} from '../components/EmptyState';
 import {API_URL} from '../constants';
 import {getDuration} from '../utils';
 
@@ -32,6 +33,9 @@ export const MovieList = ({route, navigation}: Props) => {
     initialPageParam: 10,
     getPreviousPageParam: firstPage => firstPage.previousId ?? undefined,
     getNextPageParam: lastPage => {
+      if (lastPage.length === 0) {
+        return;
+      }
       const cursor = lastPage[lastPage.length - 1];
       return cursor.id;
     },
@@ -55,6 +59,13 @@ export const MovieList = ({route, navigation}: Props) => {
                 }}
               />
             )}
+            ListEmptyComponent={
+              <EmptyState
+                onPress={() => {
+                  navigation.goBack();
+                }}
+              />
+            }
             keyExtractor={item => item.CPB}
             estimatedItemSize={200}
             onEndReachedThreshold={0.8}
@@ -69,6 +80,7 @@ export const MovieList = ({route, navigation}: Props) => {
 const styles = StyleSheet.create({
   wrapper: {
     marginTop: 10,
+    flex: 1,
     height: Dimensions.get('window').height,
     width: Dimensions.get('window').width,
   },

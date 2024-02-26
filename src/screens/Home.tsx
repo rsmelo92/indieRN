@@ -1,7 +1,6 @@
 import React from 'react';
 import {
   Dimensions,
-  SafeAreaView,
   ScrollView,
   StatusBar,
   StyleSheet,
@@ -30,8 +29,7 @@ const tags = [
 
 export const Home = ({navigation}: Props) => {
   return (
-    <SafeAreaView>
-      <StatusBar translucent backgroundColor="transparent" />
+    <>
       <View style={styles.wrapper}>
         <ScrollView
           contentContainerStyle={styles.scrollViewContent}
@@ -78,7 +76,7 @@ export const Home = ({navigation}: Props) => {
           </View>
         </ScrollView>
       </View>
-    </SafeAreaView>
+    </>
   );
 };
 
