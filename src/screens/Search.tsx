@@ -2,6 +2,7 @@ import {useQuery} from '@tanstack/react-query';
 import React, {useState} from 'react';
 import {StyleSheet, TouchableWithoutFeedback, Text, View} from 'react-native';
 
+import {SkeletonSearch} from '../components/SkeletonSearch';
 import {SearchInput} from '../components/SearchInput';
 import {API_URL} from '../constants';
 import {debounce} from '../utils';
@@ -14,8 +15,8 @@ type Props = {} & SearchProps;
 export const Search = ({navigation}: Props) => {
   const [query, setQuery] = useState<string>('');
   const [isSearching, setIsSearching] = useState(false);
-  const {isPending, data} = useQuery({
-    queryKey: ['search'],
+  const {isPending, data, isFetching} = useQuery({
+    queryKey: ['search', query],
     queryFn: async () => {
       try {
         const url = `${API_URL}/search?query=${query}`;
@@ -32,6 +33,9 @@ export const Search = ({navigation}: Props) => {
   });
 
   const debouncedSearch = debounce((value: string) => {
+    if (value === '') {
+      return;
+    }
     setQuery(value);
     setIsSearching(true);
   }, 500);
@@ -39,9 +43,9 @@ export const Search = ({navigation}: Props) => {
   return (
     <View style={styles.wrapper}>
       <SearchInput onSearch={value => debouncedSearch(value)} />
-      <View>
-        {isPending ? (
-          <Text>Loading...</Text>
+      <>
+        {query && (isPending || isFetching) ? (
+          <SkeletonSearch />
         ) : (
           data?.map((movie: Movie) => (
             <TouchableWithoutFeedback
@@ -56,7 +60,7 @@ export const Search = ({navigation}: Props) => {
             </TouchableWithoutFeedback>
           ))
         )}
-      </View>
+      </>
     </View>
   );
 };
