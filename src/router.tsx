@@ -1,4 +1,5 @@
-import React from 'react';
+import React, {useEffect} from 'react';
+import SplashScreen from 'react-native-splash-screen';
 import {createStackNavigator} from '@react-navigation/stack';
 
 import {Home} from './screens/Home';
@@ -32,6 +33,10 @@ export type MovieListProps = StackScreenProps<RootStackParamList, 'MovieList'>;
 const Stack = createStackNavigator<RootStackParamList>();
 
 export const Router = () => {
+  useEffect(() => {
+    SplashScreen.hide();
+  }, []);
+
   return (
     <Stack.Navigator
       initialRouteName="Login"
