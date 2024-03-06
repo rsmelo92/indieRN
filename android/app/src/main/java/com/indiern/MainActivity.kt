@@ -8,6 +8,7 @@ import com.facebook.react.defaults.DefaultReactActivityDelegate
 
 // Packages imports
 import android.os.Bundle;
+import org.devio.rn.splashscreen.SplashScreen; 
 
 class MainActivity : ReactActivity() {
 
@@ -28,6 +29,7 @@ class MainActivity : ReactActivity() {
    * This override is necessary for React Navigation to work properly as seen on documentation.
    */
   override fun onCreate(savedInstanceState: Bundle?) {
+    SplashScreen.show(this); 
     super.onCreate(null)
   }
 }
