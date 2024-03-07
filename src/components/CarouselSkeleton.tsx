@@ -15,7 +15,7 @@ const SkeletonItem = () => (
 );
 
 export const CarouselSkeleton = () => (
-  <View style={styles.view}>
+  <View testID="skeleton-carousel" style={styles.view}>
     <SkeletonItem />
     <SkeletonItem />
     <SkeletonItem />
