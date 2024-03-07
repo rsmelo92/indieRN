@@ -3,16 +3,14 @@ import SplashScreen from 'react-native-splash-screen';
 import {createStackNavigator} from '@react-navigation/stack';
 
 import {Home} from './screens/Home';
-import {Login} from './screens/Login';
-
-import type {StackScreenProps} from '@react-navigation/stack';
 import {MovieDetail} from './screens/MovieDetail';
 import {Search} from './screens/Search';
 import {MovieList} from './screens/MovieList';
 
+import type {StackScreenProps} from '@react-navigation/stack';
+
 type RootStackParamList = {
   Home: undefined;
-  Login: undefined;
   Search: undefined;
   MovieDetail: {CPB: string};
   MovieList: {
@@ -21,7 +19,6 @@ type RootStackParamList = {
   };
 };
 
-export type LoginProps = StackScreenProps<RootStackParamList, 'Login'>;
 export type HomeProps = StackScreenProps<RootStackParamList, 'Home'>;
 export type SearchProps = StackScreenProps<RootStackParamList, 'Search'>;
 export type MovieDetailProps = StackScreenProps<
@@ -39,7 +36,7 @@ export const Router = () => {
 
   return (
     <Stack.Navigator
-      initialRouteName="Login"
+      initialRouteName="Home"
       screenOptions={{
         title: '',
         headerTintColor: '#fff',
@@ -47,7 +44,6 @@ export const Router = () => {
           backgroundColor: '#191a23',
         },
       }}>
-      <Stack.Screen name="Login" component={Login} />
       <Stack.Screen name="Home" component={Home} />
       <Stack.Screen name="Search" component={Search} />
       <Stack.Screen
