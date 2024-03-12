@@ -1,5 +1,11 @@
 # Getting Started
 
+
+
+https://github.com/rsmelo92/indieRN/assets/16295402/6ee911d6-aaee-40ad-af89-8636075772f6
+
+
+
 >**Note**: Make sure you have completed the [React Native - Environment Setup](https://reactnative.dev/docs/environment-setup) instructions till "Creating a new application" step, before proceeding.
 
 ## Step 1: Start the Metro Server
