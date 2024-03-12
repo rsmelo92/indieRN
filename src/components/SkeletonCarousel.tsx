@@ -14,7 +14,7 @@ const SkeletonItem = () => (
   </SkeletonPlaceholder>
 );
 
-export const CarouselSkeleton = () => (
+export const SkeletonCarousel = () => (
   <View testID="skeleton-carousel" style={styles.view}>
     <SkeletonItem />
     <SkeletonItem />

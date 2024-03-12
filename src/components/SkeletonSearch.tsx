@@ -31,7 +31,7 @@ const SkeletonItem = () => {
 
 export const SkeletonSearch = () => {
   return (
-    <View style={styles.wrapper}>
+    <View testID="skeleton-search" style={styles.wrapper}>
       <SkeletonItem />
     </View>
   );

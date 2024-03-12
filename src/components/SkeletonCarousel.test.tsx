@@ -1,8 +1,8 @@
 import React from 'react';
 import {render, screen} from '@testing-library/react-native';
-import {CarouselSkeleton} from './CarouselSkeleton';
+import {SkeletonCarousel} from './SkeletonCarousel';
 
 test('render properly', () => {
-  render(<CarouselSkeleton />);
+  render(<SkeletonCarousel />);
   expect(screen.getByTestId('skeleton-carousel')).toBeTruthy();
 });
