@@ -12,7 +12,10 @@ type Props = {
 
 export const MovieItem = ({onPress, title, year, duration}: Props) => {
   return (
-    <TouchableOpacity style={styles.horizontal} onPress={onPress}>
+    <TouchableOpacity
+      testID="movie-item"
+      style={styles.horizontal}
+      onPress={onPress}>
       <View style={styles.imageWrapper}>
         <FilmRoll height={70} width={70} />
       </View>
@@ -28,7 +31,10 @@ export const MovieItem = ({onPress, title, year, duration}: Props) => {
 
 export const MovieItemVertical = ({onPress, title, year, duration}: Props) => {
   return (
-    <TouchableOpacity style={styles.vertical} onPress={onPress}>
+    <TouchableOpacity
+      testID="movie-item-vertical"
+      style={styles.vertical}
+      onPress={onPress}>
       <View style={styles.imageWrapper}>
         <FilmRoll height={100} width={100} />
       </View>

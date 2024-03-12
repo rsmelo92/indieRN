@@ -8,7 +8,7 @@ import {API_URL} from '../constants';
 import {getDuration} from '../utils';
 
 import type {Movie} from '../../types';
-import {CarouselSkeleton} from './CarouselSkeleton';
+import {SkeletonCarousel} from './SkeletonCarousel';
 
 type Props = {
   type: 'curta' | 'media' | 'longaMedia' | 'longa';
@@ -45,7 +45,7 @@ export const MovieCarousel = ({title, type, navigation}: Props) => {
       <Text style={styles.title}>{title}</Text>
       <View style={styles.wrapper}>
         {isPending ? (
-          <CarouselSkeleton />
+          <SkeletonCarousel />
         ) : (
           <FlashList
             data={data}

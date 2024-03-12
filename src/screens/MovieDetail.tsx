@@ -8,8 +8,8 @@ import {
   ScrollView,
 } from 'react-native';
 import {useQuery} from '@tanstack/react-query';
+
 import {API_URL} from '../constants';
-import {Wrapper} from '../components/Wrapper';
 import {capitalizeFirstLetter, getDuration} from '../utils';
 
 import type {MovieDetailProps} from '../router';
@@ -34,9 +34,9 @@ export const MovieDetail = ({route}: MovieDetailProps) => {
 
   if (isPending || data === undefined) {
     return (
-      <Wrapper>
+      <View style={styles.wrapper}>
         <Text>Loading..</Text>
-      </Wrapper>
+      </View>
     );
   }
 
@@ -48,7 +48,7 @@ export const MovieDetail = ({route}: MovieDetailProps) => {
   console.log({data});
 
   return (
-    <Wrapper>
+    <View style={styles.wrapper}>
       <Image
         style={styles.cover}
         source={require('../assets/placeholder.jpeg')}
@@ -75,11 +75,19 @@ export const MovieDetail = ({route}: MovieDetailProps) => {
           </View>
         </ScrollView>
       </View>
-    </Wrapper>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
+  wrapper: {
+    flex: 1,
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    height: '100%',
+    width: '100%',
+  },
   cover: {
     height: Dimensions.get('window').height * 0.3,
     width: Dimensions.get('window').width,

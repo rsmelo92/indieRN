@@ -3,7 +3,12 @@ import Svg, {Path} from 'react-native-svg';
 import type {SvgProps} from 'react-native-svg';
 
 export const FilmRoll = (props: SvgProps) => (
-  <Svg width={150} height={150} viewBox="0 0 600 600" {...props}>
+  <Svg
+    testID="film-roll-svg"
+    width={150}
+    height={150}
+    viewBox="0 0 600 600"
+    {...props}>
     <Path
       fill="#fff"
       strokeMiterlimit={10}
